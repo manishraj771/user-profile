@@ -1,53 +1,37 @@
-# 🛠️ User Profile Management API (with JWT Auth, Refresh Tokens & Image Upload)
+# 🛠️ User Profile Management API
 
-This is a full-featured **user profile management backend** built with **Node.js, Express, and MongoDB**, including:
+user profile management system built with Node.js, Express, MongoDB, and JWT Authentication. It includes secure login, refresh tokens, protected routes, profile CRUD, and image upload via Cloudinary.
 
-- ✅ Secure JWT-based authentication
-- 🔄 Refresh token system
-- 👤 Profile CRUD (Create, Read, Update, Delete)
-- ☁️ Profile picture upload using **Cloudinary**
-- 🍪 Refresh token stored in HTTP-only cookies
-- 🔐 Protected routes with token middleware
+##  Features
+- Secure JWT-based authentication (access + refresh tokens)
+- Refresh token system (stored in HTTP-only cookies)
+- User profile CRUD (Create, Read, Update, Delete)
+- Upload profile picture to Cloudinary
+- Protected API routes via middleware
+- Basic frontend with React + Tailwind CSS for testing
 
----
+## ⚙️ Tech Stack
 
-## 🔧 Tech Stack
+Backend:
+- Node.js, Express, MongoDB, Mongoose
+- JWT, Multer, Cloudinary, Cookie-parser, Dotenv
 
-**Backend:**
-- Node.js + Express
-- MongoDB (via Mongoose)
-- JWT for authentication
-- Multer + Cloudinary for file upload
-- Cookie-parser + dotenv
+Frontend: for testing purpose only
+- React, Tailwind CSS (optional)
 
-**Frontend:**
-- React (basic UI for testing)
-- Tailwind CSS
+##  Getting Started
 
----
-
-## 📦 Features
-
-- User **registration** with hashed password
-- **Login** with JWT access & refresh tokens
-- **Protected routes** (user can only access own profile)
-- **Profile update**, including `bio` and `address`
-- **Upload profile picture** via Cloudinary
-- **Logout** by clearing token (frontend-side)
-- **Refresh route** to get new access token using cookie
-- **Delete user** endpoint
-
----
-
-## 🚀 Setup Instructions
-
-### 🛠️ Backend Setup
+Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/yourusername/user-profile-management.git
-cd user-profile-management/backend
+git clone https://github.com/manishraj771/user-profile
+cd user-profile
 npm install
-Create a .env file in user-profile-management
+```
+
+Create a `.env` file inside the backend folder with the following content:
+
+```env
 PORT=5000
 MONGO_URI=mongodb+srv://<your_credentials>
 JWT_SECRET=your_jwt_secret_key
@@ -56,52 +40,95 @@ JWT_REFRESH_EXPIRE=7d
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
-then 
-Start server:
+```
+
+Start the backend server:
+
+```bash
 node server.js
+```
 
-Server will run at: http://localhost:5000
+The backend will run at: http://localhost:5000
 
-##  Postman API Documentation
+## 📬 API Endpoints
 
-A Postman Collection file is included in this repo: `user-profile-api.postman_collection.json`
+1. **Register a new user**
+   - `POST /api/users/register`
+   - Body:
+   ```json
+   {
+     "name": "John Doe",
+     "email": "john@example.com",
+     "address": "123 Main St",
+     "password": "yourpassword"
+   }
+   ```
 
-### API Endpoints List:
+2. **Login**
+   - `POST /api/users/login`
+   - Body:
+   ```json
+   {
+     "email": "john@example.com",
+     "password": "yourpassword"
+   }
+   ```
 
-1. **POST** `/api/users/register`  
-   → Register a new user  
-   → Body (JSON): `name`, `email`, `address`, `password`
+3. **Get user profile**
+   - `GET /api/users/profile`
+   - Headers: `Authorization: Bearer <accessToken>`
 
-2. **POST** `/api/users/login`  
-   → Login and get access token  
-   → Body (JSON): `email`, `password`
+4. **Update profile**
+   - `PUT /api/users/profile`
+   - Headers: `Authorization: Bearer <accessToken>`
+   - Body:
+   ```json
+   {
+     "bio": "Loves coding",
+     "address": "456 Dev Street"
+   }
+   ```
 
-3. **GET** `/api/users/profile`  
-   → Get logged-in user's profile  
-   → Header: `Authorization: Bearer <accessToken>`
+5. **Upload profile picture**
+   - `POST /api/users/profile/upload`
+   - Headers: `Authorization: Bearer <accessToken>`
+   - Form-Data: `profilePicture` (type: file)
 
-4. **PUT** `/api/users/profile`  
-   → Update profile (bio, address)  
-   → Header: `Authorization: Bearer <accessToken>`  
-   → Body (JSON): `bio`, `address`
+6. **Delete user account**
+   - `DELETE /api/users/profile`
+   - Headers: `Authorization: Bearer <accessToken>`
 
-5. **POST** `/api/users/profile/upload`  
-   → Upload profile picture  
-   → Header: `Authorization: Bearer <accessToken>`  
-   → Body (form-data): key = `profilePicture`, type = file
+7. **Refresh token**
+   - `POST /api/users/refresh`
+   - Uses cookie from login
 
-6. **DELETE** `/api/users/profile`  
-   → Delete own account  
-   → Header: `Authorization: Bearer <accessToken>`
+## 🧪 Postman Collection
 
-7. **POST** `/api/users/refresh`  
-   → Get new access token using cookie-based refresh token
+Use the file: `user-profile-api.postman_collection.json` included in the repo for testing.
 
+## 🖥️ Frontend (Optional)
 
-Frontend (Optional)
-Basic React UI is included in /client for testing:
+If you want to test the frontend:
 
+```bash
 cd ../client
 npm install
 npm start
+```
+
+## 📁 Folder Structure
+
+```
+user-profile
+├── 
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── utils/
+│   └── server.js
+├── client/
+│   └── (React frontend)
+└── user-profile-api.postman_collection.json
+```
 
