@@ -22,11 +22,11 @@ const Login = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      <input name="email" placeholder="Email" onChange={handleChange} required />
-      <input name="password" placeholder="Password" type="password" onChange={handleChange} required />
-      <button type="submit">Login</button>
+    <form onSubmit={handleSubmit} className="max-w-md mx-auto mt-10 space-y-4 bg-white shadow p-6 rounded">
+      <h2 className="text-2xl font-bold text-center">Login</h2>
+      <input name="email" className="w-full border px-4 py-2 rounded" placeholder="Email" onChange={handleChange} required />
+      <input name="password" className="w-full border px-4 py-2 rounded" placeholder="Password" type="password" onChange={handleChange} required />
+      <button className="bg-green-600 text-white px-4 py-2 rounded w-full" type="submit">Login</button>
     </form>
   );
 };

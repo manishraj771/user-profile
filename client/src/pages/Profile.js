@@ -26,15 +26,15 @@ const Profile = () => {
   };
 
   return (
-    <div>
-      <h2>Welcome, {user.name}</h2>
-      <img src={user.profilePictureUrl} alt="Profile" width="150" />
-      <p>Email: {user.email}</p>
-      <input value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Bio" />
-      <button onClick={handleUpdate}>Update Bio</button>
-      <br /><br />
+    <div className="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow space-y-4">
+      <h2 className="text-2xl font-bold">Welcome, {user.name}</h2>
+      {user.profilePictureUrl && <img src={user.profilePictureUrl} alt="Profile" className="w-32 h-32 rounded-full" />}
+      <p><strong>Email:</strong> {user.email}</p>
+      <input value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Bio" className="w-full border px-4 py-2 rounded" />
+      <button onClick={handleUpdate} className="bg-blue-600 text-white px-4 py-2 rounded w-full">Update Bio</button>
+
       <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-      <button onClick={handleUpload}>Upload Picture</button>
+      <button onClick={handleUpload} className="bg-purple-600 text-white px-4 py-2 rounded w-full">Upload Picture</button>
     </div>
   );
 };

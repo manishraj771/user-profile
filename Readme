@@ -1,0 +1,107 @@
+# 🛠️ User Profile Management API (with JWT Auth, Refresh Tokens & Image Upload)
+
+This is a full-featured **user profile management backend** built with **Node.js, Express, and MongoDB**, including:
+
+- ✅ Secure JWT-based authentication
+- 🔄 Refresh token system
+- 👤 Profile CRUD (Create, Read, Update, Delete)
+- ☁️ Profile picture upload using **Cloudinary**
+- 🍪 Refresh token stored in HTTP-only cookies
+- 🔐 Protected routes with token middleware
+
+---
+
+## 🔧 Tech Stack
+
+**Backend:**
+- Node.js + Express
+- MongoDB (via Mongoose)
+- JWT for authentication
+- Multer + Cloudinary for file upload
+- Cookie-parser + dotenv
+
+**Frontend:**
+- React (basic UI for testing)
+- Tailwind CSS
+
+---
+
+## 📦 Features
+
+- User **registration** with hashed password
+- **Login** with JWT access & refresh tokens
+- **Protected routes** (user can only access own profile)
+- **Profile update**, including `bio` and `address`
+- **Upload profile picture** via Cloudinary
+- **Logout** by clearing token (frontend-side)
+- **Refresh route** to get new access token using cookie
+- **Delete user** endpoint
+
+---
+
+## 🚀 Setup Instructions
+
+### 🛠️ Backend Setup
+
+```bash
+git clone https://github.com/yourusername/user-profile-management.git
+cd user-profile-management/backend
+npm install
+Create a .env file in user-profile-management
+PORT=5000
+MONGO_URI=mongodb+srv://<your_credentials>
+JWT_SECRET=your_jwt_secret_key
+JWT_ACCESS_EXPIRE=15m
+JWT_REFRESH_EXPIRE=7d
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+then 
+Start server:
+node server.js
+
+Server will run at: http://localhost:5000
+
+##  Postman API Documentation
+
+A Postman Collection file is included in this repo: `user-profile-api.postman_collection.json`
+
+### API Endpoints List:
+
+1. **POST** `/api/users/register`  
+   → Register a new user  
+   → Body (JSON): `name`, `email`, `address`, `password`
+
+2. **POST** `/api/users/login`  
+   → Login and get access token  
+   → Body (JSON): `email`, `password`
+
+3. **GET** `/api/users/profile`  
+   → Get logged-in user's profile  
+   → Header: `Authorization: Bearer <accessToken>`
+
+4. **PUT** `/api/users/profile`  
+   → Update profile (bio, address)  
+   → Header: `Authorization: Bearer <accessToken>`  
+   → Body (JSON): `bio`, `address`
+
+5. **POST** `/api/users/profile/upload`  
+   → Upload profile picture  
+   → Header: `Authorization: Bearer <accessToken>`  
+   → Body (form-data): key = `profilePicture`, type = file
+
+6. **DELETE** `/api/users/profile`  
+   → Delete own account  
+   → Header: `Authorization: Bearer <accessToken>`
+
+7. **POST** `/api/users/refresh`  
+   → Get new access token using cookie-based refresh token
+
+
+Frontend (Optional)
+Basic React UI is included in /client for testing:
+
+cd ../client
+npm install
+npm start
+
