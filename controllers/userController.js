@@ -14,7 +14,26 @@ exports.register = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
-
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ message: 'Invalid credentials' });
+  
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+  
+    const accessToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_ACCESS_EXPIRE });
+    const refreshToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_REFRESH_EXPIRE });
+  
+    res
+      .cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: false, // true in production (HTTPS)
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+      })
+      .json({ accessToken });
+  };
 exports.getProfile = async (req, res) => {
   const user = await User.findById(req.user).select('-password');
   if (!user) return res.status(404).json({ message: 'User not found' });
@@ -29,3 +48,12 @@ exports.updateProfile = async (req, res) => {
   const user = await User.findByIdAndUpdate(req.user, updates, { new: true, runValidators: true }).select('-password');
   res.json(user);
 };
+exports.deleteProfile = async (req, res) => {
+    try {
+      await User.findByIdAndDelete(req.user);
+      res.json({ message: 'User deleted successfully' });
+    } catch (err) {
+      res.status(500).json({ message: 'Failed to delete user', error: err.message });
+    }
+  };
+  

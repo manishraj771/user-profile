@@ -1,0 +1,144 @@
+{
+    "info": {
+      "_postman_id": "c8de0074-7d2f-42e4-aaa9-9f9a64d198f5",
+      "name": "User Profile Management API",
+      "description": "Test all user auth and profile endpoints",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Register User",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"name\": \"Manish\",\n  \"email\": \"manish@example.com\",\n  \"address\": \"Rajasthan\",\n  \"password\": \"mypassword123\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/api/users/register",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "register"]
+          }
+        }
+      },
+      {
+        "name": "Login",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"email\": \"manish@example.com\",\n  \"password\": \"mypassword123\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/api/users/login",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "login"]
+          }
+        }
+      },
+      {
+        "name": "Get Profile",
+        "request": {
+          "method": "GET",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+          ],
+          "url": {
+            "raw": "http://localhost:5000/api/users/profile",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "profile"]
+          }
+        }
+      },
+      {
+        "name": "Update Profile",
+        "request": {
+          "method": "PUT",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+            { "key": "Content-Type", "value": "application/json" }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\n  \"bio\": \"Updated bio\",\n  \"address\": \"Jaipur\"\n}"
+          },
+          "url": {
+            "raw": "http://localhost:5000/api/users/profile",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "profile"]
+          }
+        }
+      },
+      {
+        "name": "Upload Profile Picture",
+        "request": {
+          "method": "POST",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+          ],
+          "body": {
+            "mode": "formdata",
+            "formdata": [
+              {
+                "key": "profilePicture",
+                "type": "file",
+                "src": ""
+              }
+            ]
+          },
+          "url": {
+            "raw": "http://localhost:5000/api/users/profile/upload",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "profile", "upload"]
+          }
+        }
+      },
+      {
+        "name": "Delete Profile",
+        "request": {
+          "method": "DELETE",
+          "header": [
+            { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+          ],
+          "url": {
+            "raw": "http://localhost:5000/api/users/profile",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "profile"]
+          }
+        }
+      },
+      {
+        "name": "Refresh Token",
+        "request": {
+          "method": "POST",
+          "header": [],
+          "url": {
+            "raw": "http://localhost:5000/api/users/refresh",
+            "protocol": "http",
+            "host": ["localhost"],
+            "port": "5000",
+            "path": ["api", "users", "refresh"]
+          }
+        }
+      }
+    ]
+  }
+  
